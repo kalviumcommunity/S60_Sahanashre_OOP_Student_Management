@@ -2,16 +2,16 @@
 #include <string>
 using namespace std;
 
-class Student {
+class Student{
     private:
     string name;
     int age;
     int rollNo;
     public:
-    Student(string n, int a, int no){
-        name = n;
-        age = a;
-        rollNo = no;
+    Student(string name, int age, int rollNo){
+        this->name = name;
+        this->age = age;
+        this->rollNo = rollNo;
     }
     void getStudentDetails(){
         cout<<"Name: "<< name << ", Age: " << age << ", Student Roll No: "<< rollNo << endl;
@@ -29,10 +29,10 @@ private:
     int credits;
 
 public:
-    Course(string cName, string cCode, int c) {
-        courseName = cName;
-        courseCode = cCode;
-        credits = c;
+    Course(string courseName, string courseCode, int credits) {
+        this->courseName = courseName;
+        this->courseCode = courseCode;
+        this->credits = credits;
     }
 
     void getCourseDetails() {
