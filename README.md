@@ -1,0 +1,1 @@
+This project is Student Management which is implemented using C++.
