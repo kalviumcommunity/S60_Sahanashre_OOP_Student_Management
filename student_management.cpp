@@ -53,7 +53,7 @@ public:
 };
 
 int main() {
-    Student students[2] = {
+    Student* students = new Student[2] {
         Student("Sahu", 18, 1),
         Student("Sasdi", 14, 2)
     };
@@ -64,7 +64,7 @@ int main() {
 
     students[0].updateAge(19);
 
-    Course courses[2] = {
+    Course* courses = new Course[2] {
         Course("Problem Solving", "PSUP1", 4),
         Course("Data Structures", "DS101", 3)
     };
@@ -74,6 +74,9 @@ int main() {
     }
 
     courses[0].updateCredits(5);
+    
+    delete[] students;
+    delete[] courses;
 
     return 0;
 }
