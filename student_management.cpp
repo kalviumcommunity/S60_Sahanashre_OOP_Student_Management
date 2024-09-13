@@ -27,6 +27,10 @@ public:
         age = newAge;
         cout << "Updated Age: " << age << endl;
     }
+    
+    static void totalStudents(){
+        cout<<"Total Students: " << totalStudent << endl;
+    }
 };
 int Student::totalStudent=0;
 
@@ -56,6 +60,10 @@ public:
         cout << "Updated Credits: " << credits << endl;
     }
     
+    static void totalCourses(){
+        cout<<"Total Courses: "<<totalCourse<<endl;
+    }
+    
 };
 
 int Course::totalCourse=0;
@@ -81,6 +89,9 @@ int main() {
     }
 
     courses[0].updateCredits(5);
+    
+    Student::totalStudents();
+    Course::totalCourses();
     
     delete[] students;
     delete[] courses;
