@@ -9,9 +9,11 @@ private:
     int rollNo;
 
 public:
+    static int totalStudent;
     Student() {} 
 
     Student(string name, int age, int rollNo) {
+        totalStudent++;
         this->name = name;
         this->age = age;
         this->rollNo = rollNo;
@@ -26,6 +28,7 @@ public:
         cout << "Updated Age: " << age << endl;
     }
 };
+int Student::totalStudent=0;
 
 class Course {
 private:
@@ -34,9 +37,11 @@ private:
     int credits;
 
 public:
+    static int totalCourse;
     Course() {}  
 
     Course(string courseName, string courseCode, int credits) {
+        totalCourse++;
         this->courseName = courseName;
         this->courseCode = courseCode;
         this->credits = credits;
@@ -50,8 +55,10 @@ public:
         credits = newCredits;
         cout << "Updated Credits: " << credits << endl;
     }
+    
 };
 
+int Course::totalCourse=0;
 int main() {
     Student* students = new Student[2] {
         Student("Sahu", 18, 1),
