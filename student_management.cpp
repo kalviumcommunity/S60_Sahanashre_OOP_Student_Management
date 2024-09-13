@@ -2,23 +2,28 @@
 #include <string>
 using namespace std;
 
-class Student{
-    private:
+class Student {
+private:
     string name;
     int age;
     int rollNo;
-    public:
-    Student(string name, int age, int rollNo){
+
+public:
+    Student() {} 
+
+    Student(string name, int age, int rollNo) {
         this->name = name;
         this->age = age;
         this->rollNo = rollNo;
     }
-    void getStudentDetails(){
-        cout<<"Name: "<< name << ", Age: " << age << ", Student Roll No: "<< rollNo << endl;
+
+    void getStudentDetails() {
+        cout << "Name: " << name << ", Age: " << age << ", Roll No: " << rollNo << endl;
     }
-    void updateAge(int newAge){
+
+    void updateAge(int newAge) {
         age = newAge;
-        cout<<"Updated Age: " << age << endl;
+        cout << "Updated Age: " << age << endl;
     }
 };
 
@@ -29,6 +34,8 @@ private:
     int credits;
 
 public:
+    Course() {}  
+
     Course(string courseName, string courseCode, int credits) {
         this->courseName = courseName;
         this->courseCode = courseCode;
@@ -46,13 +53,27 @@ public:
 };
 
 int main() {
-    Student student1("Sahu", 18, 1);
-    student1.getStudentDetails();  
-    student1.updateAge(19); 
+    Student students[2] = {
+        Student("Sahu", 18, 1),
+        Student("Sasdi", 14, 2)
+    };
 
-    Course course1("Problem Solving", "PSUP1", 4);
-    course1.getCourseDetails();  
-    course1.updateCredits(5);    
+    for (int i = 0; i < 2; i++) {
+        students[i].getStudentDetails();
+    }
+
+    students[0].updateAge(19);
+
+    Course courses[2] = {
+        Course("Problem Solving", "PSUP1", 4),
+        Course("Data Structures", "DS101", 3)
+    };
+
+    for (int i = 0; i < 2; i++) {
+        courses[i].getCourseDetails();
+    }
+
+    courses[0].updateCredits(5);
 
     return 0;
 }
