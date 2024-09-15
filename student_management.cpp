@@ -13,7 +13,23 @@ public:
     //Initialize static variable
     static int totalStudent; 
 
-    Student() { totalStudent++; }
+    // Default Constructor
+    Student() { 
+        name = "Unknown";
+        age = 0;
+        rollNo = 0;
+        address = "Not Provided";
+        totalStudent++; 
+    }
+    
+    // Parameterized Constructor
+    Student(string n, int a, int r, string addr) {
+        name = n;
+        age = a;
+        rollNo = r;
+        address = addr;
+        totalStudent++;
+    }
 
     // Setter function 
     void setStudent(string n, int a, int r, string addr){
@@ -50,6 +66,12 @@ public:
     static void totalStudents() {
         cout << "Total Students: " << totalStudent << endl;
     }
+    
+    // Destructors
+    ~Student(){
+        cout<<"Good Bye "<<name<<endl;
+        totalStudent--;
+    }
 };
 
 // Initialize static variable
@@ -65,7 +87,23 @@ private:
 public:
     static int totalCourse; // Static variable
 
-    Course() { totalCourse++; }
+    // Default Constructor
+    Course() { 
+        courseName = "Unknown";
+        courseCode = "";
+        credits = 0;
+        instructor = "";
+        totalCourse++;
+        }
+        
+    // Parameterized Constructor
+    Course(string n, string code, int c, string instr) {
+        courseName = n;
+        courseCode = code;
+        credits = c;
+        instructor = instr;
+        totalCourse++;
+    }
 
     // Setter function
     void setCourse(string n, string code, int c, string instr) {
@@ -102,6 +140,12 @@ public:
     static void totalCourses() {
         cout << "Total Courses: " << totalCourse << endl;
     }
+    
+    // Destructors
+    ~Course(){
+        cout<<"Completed Course is "<<courseName<<endl;
+        totalCourse--;
+    }
 };
 
 // Initialize static variable
@@ -121,10 +165,11 @@ int main() {
     // Update age of the first student
     students[0].updateAge(19);
 
-    // Create array of Course objects and set their details
-    Course courses[2];
-    courses[0].setCourse("Problem Solving", "PSUP1", 4, "Nayan");
-    courses[1].setCourse("Data Structures", "DS101", 3, "Sumit");
+    // Create array of Course objects and send their details using parameterized constructors
+    Course courses[2] = {
+    Course("Problem Solving", "PSUP1", 4, "Nayan"),
+    Course("Data Structures", "DS101", 3, "Sumit")
+    };
     
     // Print details of each course
     for (int i = 0; i < 2; i++) {
