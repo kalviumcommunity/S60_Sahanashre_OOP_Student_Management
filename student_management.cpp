@@ -10,17 +10,20 @@ private:
 
 public:
     static int totalStudent;
-    Student() {} 
+    Student() {totalStudent++;} 
 
-    Student(string name, int age, int rollNo) {
-        totalStudent++;
-        this->name = name;
-        this->age = age;
-        this->rollNo = rollNo;
+    void setStudent(string n, int a, int r){
+        name = n;
+        age = a;
+        rollNo = r;
     }
+    
+    string getName() { return name; }
+    int getAge() { return age; }
+    int getRollNo() { return rollNo; }
 
     void getStudentDetails() {
-        cout << "Name: " << name << ", Age: " << age << ", Roll No: " << rollNo << endl;
+        cout << "Name: " << getName() << ", Age: " << getAge() << ", Roll No: " << getRollNo() << endl;
     }
 
     void updateAge(int newAge) {
@@ -42,17 +45,20 @@ private:
 
 public:
     static int totalCourse;
-    Course() {}  
+    Course() {totalCourse++;}  
 
-    Course(string courseName, string courseCode, int credits) {
-        totalCourse++;
-        this->courseName = courseName;
-        this->courseCode = courseCode;
-        this->credits = credits;
+    void setCourse(string n, string code, int c){
+        courseName = n;
+        courseCode = code;
+        credits = c;
     }
 
+    string getCourseName() { return courseName; }
+    string getCourseCode() { return courseCode; }
+    int getCredits() { return credits; }
+
     void getCourseDetails() {
-        cout << "Course: " << courseName << ", Code: " << courseCode << ", Credits: " << credits << endl;
+        cout << "Course: " << getCourseName() << ", Code: " << getCourseCode() << ", Credits: " << getCredits() << endl;
     }
 
     void updateCredits(int newCredits) {
@@ -68,10 +74,9 @@ public:
 
 int Course::totalCourse=0;
 int main() {
-    Student* students = new Student[2] {
-        Student("Sahu", 18, 1),
-        Student("Sasdi", 14, 2)
-    };
+    Student students[2];
+        students[0].setStudent("Sahu", 18, 1);
+        students[1].setStudent("Sasdi", 14, 2);
 
     for (int i = 0; i < 2; i++) {
         students[i].getStudentDetails();
@@ -79,11 +84,10 @@ int main() {
 
     students[0].updateAge(19);
 
-    Course* courses = new Course[2] {
-        Course("Problem Solving", "PSUP1", 4),
-        Course("Data Structures", "DS101", 3)
-    };
-
+    Course courses[2];
+        courses[0].setCourse("Problem Solving", "PSUP1", 4);
+        courses[1].setCourse("Data Structures", "DS101", 3);
+    
     for (int i = 0; i < 2; i++) {
         courses[i].getCourseDetails();
     }
@@ -92,9 +96,6 @@ int main() {
     
     Student::totalStudents();
     Course::totalCourses();
-    
-    delete[] students;
-    delete[] courses;
 
     return 0;
 }
