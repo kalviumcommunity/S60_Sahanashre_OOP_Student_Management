@@ -4,96 +4,137 @@ using namespace std;
 
 class Student {
 private:
-    string name;
-    int age;
+    string name;  
+    int age;      
     int rollNo;
-
+    string address; 
+    
 public:
-    static int totalStudent;
-    Student() {totalStudent++;} 
+    //Initialize static variable
+    static int totalStudent; 
 
-    void setStudent(string n, int a, int r){
+    Student() { totalStudent++; }
+
+    // Setter function 
+    void setStudent(string n, int a, int r, string addr){
         name = n;
         age = a;
         rollNo = r;
+        address = addr;
     }
-    
+
+    // Getter function for name
     string getName() { return name; }
+
+    // Getter function for age
     int getAge() { return age; }
+
+    // Getter function for roll number
     int getRollNo() { return rollNo; }
 
+    // Getter function for address
+    string getAddress() { return address; }
+
+    // Function to print student details
     void getStudentDetails() {
-        cout << "Name: " << getName() << ", Age: " << getAge() << ", Roll No: " << getRollNo() << endl;
+        cout << "Name: " << getName() << ", Age: " << getAge() << ", Roll No: " << getRollNo() << ", Address: " << getAddress() << endl;
     }
 
+    // Mutator function to update student's age
     void updateAge(int newAge) {
         age = newAge;
         cout << "Updated Age: " << age << endl;
     }
     
-    static void totalStudents(){
-        cout<<"Total Students: " << totalStudent << endl;
+    // Static function to print total number of students
+    static void totalStudents() {
+        cout << "Total Students: " << totalStudent << endl;
     }
 };
-int Student::totalStudent=0;
+
+// Initialize static variable
+int Student::totalStudent = 0;
 
 class Course {
 private:
-    string courseName;
-    string courseCode;
-    int credits;
+    string courseName; 
+    string courseCode; 
+    int credits;       
+    string instructor; 
 
 public:
-    static int totalCourse;
-    Course() {totalCourse++;}  
+    static int totalCourse; // Static variable
 
-    void setCourse(string n, string code, int c){
+    Course() { totalCourse++; }
+
+    // Setter function
+    void setCourse(string n, string code, int c, string instr) {
         courseName = n;
         courseCode = code;
         credits = c;
+        instructor = instr; 
     }
 
+    // Getter function for course name
     string getCourseName() { return courseName; }
+
+    // Getter function for course code
     string getCourseCode() { return courseCode; }
+
+    // Getter function for credits
     int getCredits() { return credits; }
 
+    // Getter function for instructor
+    string getInstructor() { return instructor; }
+
+    // Function to print course details
     void getCourseDetails() {
-        cout << "Course: " << getCourseName() << ", Code: " << getCourseCode() << ", Credits: " << getCredits() << endl;
+        cout << "Course: " << getCourseName() << ", Code: " << getCourseCode() << ", Credits: " << getCredits() << ", Instructor: " << getInstructor() << endl;
     }
 
+    // Mutator function to update course credits
     void updateCredits(int newCredits) {
         credits = newCredits;
         cout << "Updated Credits: " << credits << endl;
     }
     
-    static void totalCourses(){
-        cout<<"Total Courses: "<<totalCourse<<endl;
+    // Static function to print total number of courses
+    static void totalCourses() {
+        cout << "Total Courses: " << totalCourse << endl;
     }
-    
 };
 
-int Course::totalCourse=0;
-int main() {
-    Student students[2];
-        students[0].setStudent("Sahu", 18, 1);
-        students[1].setStudent("Sasdi", 14, 2);
+// Initialize static variable
+int Course::totalCourse = 0;
 
+int main() {
+    // Create array of Student objects and set their details
+    Student students[2];
+    students[0].setStudent("Sahu", 18, 1, "123 White Field");
+    students[1].setStudent("Sasdi", 14, 2, "456 Oak Avenue");
+
+    // Print details of each student
     for (int i = 0; i < 2; i++) {
         students[i].getStudentDetails();
     }
 
+    // Update age of the first student
     students[0].updateAge(19);
 
+    // Create array of Course objects and set their details
     Course courses[2];
-        courses[0].setCourse("Problem Solving", "PSUP1", 4);
-        courses[1].setCourse("Data Structures", "DS101", 3);
+    courses[0].setCourse("Problem Solving", "PSUP1", 4, "Nayan");
+    courses[1].setCourse("Data Structures", "DS101", 3, "Sumit");
     
+    // Print details of each course
     for (int i = 0; i < 2; i++) {
         courses[i].getCourseDetails();
     }
 
+    // Update credits of the first course
     courses[0].updateCredits(5);
     
+    // Print total number of students and courses
     Student::totalStudents();
     Course::totalCourses();
 
