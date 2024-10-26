@@ -30,50 +30,44 @@ public:
         totalStudent++;
     }
 
-    // Setter function 
-    void setStudent(string n, int a, int r, string addr){
+    // Overloaded setter function for full details
+    void setStudent(string n, int a, int r, string addr) {
         name = n;
         age = a;
         rollNo = r;
         address = addr;
     }
 
-    // Getter function for name
+    // Overloaded setter function for name and roll number only
+    void setStudent(string n, int r) {
+        name = n;
+        rollNo = r;
+    }
+
     string getName() { return name; }
-
-    // Getter function for age
     int getAge() { return age; }
-
-    // Getter function for roll number
     int getRollNo() { return rollNo; }
-
-    // Getter function for address
     string getAddress() { return address; }
 
-    // Function to print student details
     void getStudentDetails() {
         cout << "Name: " << getName() << ", Age: " << getAge() << ", Roll No: " << getRollNo() << ", Address: " << getAddress() << endl;
     }
 
-    // Mutator function to update student's age
     void updateAge(int newAge) {
         age = newAge;
         cout << "Updated Age: " << age << endl;
     }
-    
-    // Static function to print total number of students
+
     static void totalStudents() {
         cout << "Total Students: " << totalStudent << endl;
     }
-    
-    // Destructor
-    ~Student(){
+
+    ~Student() {
         cout << "Good Bye " << name << endl;
         totalStudent--;
     }
 };
 
-// Initialize static variable
 int Student::totalStudent = 0;
 
 class Course {
@@ -84,9 +78,8 @@ private:
     string instructor; 
 
 public:
-    static int totalCourse; 
+    static int totalCourse;
 
-    // Default Constructor
     Course() { 
         courseName = "Unknown";
         courseCode = "";
@@ -95,7 +88,6 @@ public:
         totalCourse++;
     }
         
-    // Parameterized Constructor
     Course(string n, string code, int c, string instr) {
         courseName = n;
         courseCode = code;
@@ -104,7 +96,6 @@ public:
         totalCourse++;
     }
 
-    // Setter function
     void setCourse(string n, string code, int c, string instr) {
         courseName = n;
         courseCode = code;
@@ -112,45 +103,32 @@ public:
         instructor = instr; 
     }
 
-    // Getter function for course name
     string getCourseName() { return courseName; }
-
-    // Getter function for course code
     string getCourseCode() { return courseCode; }
-
-    // Getter function for credits
     int getCredits() { return credits; }
-
-    // Getter function for instructor
     string getInstructor() { return instructor; }
 
-    // Function to print course details
     void getCourseDetails() {
         cout << "Course: " << getCourseName() << ", Code: " << getCourseCode() << ", Credits: " << getCredits() << ", Instructor: " << getInstructor() << endl;
     }
 
-    // Mutator function to update course credits
     void updateCredits(int newCredits) {
         credits = newCredits;
         cout << "Updated Credits: " << credits << endl;
     }
-    
-    // Static function to print total number of courses
+
     static void totalCourses() {
         cout << "Total Courses: " << totalCourse << endl;
     }
-    
-    // Destructor
-    ~Course(){
+
+    ~Course() {
         cout << "Completed Course is " << courseName << endl;
         totalCourse--;
     }
 };
 
-// Initialize static variable
 int Course::totalCourse = 0;
 
-// Single inheritance: GraduateStudent inherits from Student
 class GraduateStudent : public Student {
     string researchTopic;
 
@@ -164,7 +142,6 @@ public:
     }
 };
 
-// Hierarchical Inheritance: TheoryCourse and PracticalCourse inherit from Course
 class TheoryCourse : public Course {
 public:
     TheoryCourse(string n, string code, int c, string instr) : Course(n, code, c, instr) {}
@@ -191,19 +168,23 @@ public:
 };
 
 int main() {
-    // Create GraduateStudent object
+    // Demonstrating function overloading with setStudent
+    Student student1;
+    student1.setStudent("Sahu", 1);  // Only name and roll number
+    student1.getStudentDetails();
+
+    student1.setStudent("Sahu", 18, 1, "123 White Field"); // Full details
+    student1.getStudentDetails();
+
     GraduateStudent gradStudent("Sahu", 18, 1, "123 White Field", "AI and ML");
     gradStudent.getGraduateStudentDetails();
 
-    // Create TheoryCourse and PracticalCourse objects
     TheoryCourse theory("Problem Solving", "PSUP1", 4, "Nayan");
     PracticalCourse practical("Data Structures Lab", "DS101", 3, "Sumit", "Arjun");
 
-    // Display course details
     theory.getTheoryCourseDetails();
     practical.getPracticalCourseDetails();
     
-    // Print total number of students and courses
     Student::totalStudents();
     Course::totalCourses();
 
