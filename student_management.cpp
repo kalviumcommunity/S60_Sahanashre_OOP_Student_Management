@@ -10,7 +10,6 @@ private:
     string address; 
     
 public:
-    //Initialize static variable
     static int totalStudent; 
 
     // Default Constructor
@@ -67,9 +66,9 @@ public:
         cout << "Total Students: " << totalStudent << endl;
     }
     
-    // Destructors
+    // Destructor
     ~Student(){
-        cout<<"Good Bye "<<name<<endl;
+        cout << "Good Bye " << name << endl;
         totalStudent--;
     }
 };
@@ -85,7 +84,7 @@ private:
     string instructor; 
 
 public:
-    static int totalCourse; // Static variable
+    static int totalCourse; 
 
     // Default Constructor
     Course() { 
@@ -94,7 +93,7 @@ public:
         credits = 0;
         instructor = "";
         totalCourse++;
-        }
+    }
         
     // Parameterized Constructor
     Course(string n, string code, int c, string instr) {
@@ -141,9 +140,9 @@ public:
         cout << "Total Courses: " << totalCourse << endl;
     }
     
-    // Destructors
+    // Destructor
     ~Course(){
-        cout<<"Completed Course is "<<courseName<<endl;
+        cout << "Completed Course is " << courseName << endl;
         totalCourse--;
     }
 };
@@ -151,33 +150,58 @@ public:
 // Initialize static variable
 int Course::totalCourse = 0;
 
+// Single inheritance: GraduateStudent inherits from Student
+class GraduateStudent : public Student {
+    string researchTopic;
+
+public:
+    GraduateStudent(string name, int age, int rollNo, string address, string topic) 
+        : Student(name, age, rollNo, address), researchTopic(topic) {}
+
+    void getGraduateStudentDetails() {
+        getStudentDetails();
+        cout << "Research Topic: " << researchTopic << endl;
+    }
+};
+
+// Hierarchical Inheritance: TheoryCourse and PracticalCourse inherit from Course
+class TheoryCourse : public Course {
+public:
+    TheoryCourse(string n, string code, int c, string instr) : Course(n, code, c, instr) {}
+
+    void getTheoryCourseDetails() {
+        cout << "Theory ";
+        getCourseDetails();
+    }
+};
+
+class PracticalCourse : public Course {
+private:
+    string labAssistant;
+
+public:
+    PracticalCourse(string n, string code, int c, string instr, string assistant) 
+        : Course(n, code, c, instr), labAssistant(assistant) {}
+
+    void getPracticalCourseDetails() {
+        cout << "Practical ";
+        getCourseDetails();
+        cout << "Lab Assistant: " << labAssistant << endl;
+    }
+};
+
 int main() {
-    // Create array of Student objects and set their details
-    Student students[2];
-    students[0].setStudent("Sahu", 18, 1, "123 White Field");
-    students[1].setStudent("Sasdi", 14, 2, "456 Oak Avenue");
+    // Create GraduateStudent object
+    GraduateStudent gradStudent("Sahu", 18, 1, "123 White Field", "AI and ML");
+    gradStudent.getGraduateStudentDetails();
 
-    // Print details of each student
-    for (int i = 0; i < 2; i++) {
-        students[i].getStudentDetails();
-    }
+    // Create TheoryCourse and PracticalCourse objects
+    TheoryCourse theory("Problem Solving", "PSUP1", 4, "Nayan");
+    PracticalCourse practical("Data Structures Lab", "DS101", 3, "Sumit", "Arjun");
 
-    // Update age of the first student
-    students[0].updateAge(19);
-
-    // Create array of Course objects and send their details using parameterized constructors
-    Course courses[2] = {
-    Course("Problem Solving", "PSUP1", 4, "Nayan"),
-    Course("Data Structures", "DS101", 3, "Sumit")
-    };
-    
-    // Print details of each course
-    for (int i = 0; i < 2; i++) {
-        courses[i].getCourseDetails();
-    }
-
-    // Update credits of the first course
-    courses[0].updateCredits(5);
+    // Display course details
+    theory.getTheoryCourseDetails();
+    practical.getPracticalCourseDetails();
     
     // Print total number of students and courses
     Student::totalStudents();
