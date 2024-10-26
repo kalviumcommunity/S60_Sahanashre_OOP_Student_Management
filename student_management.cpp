@@ -2,7 +2,14 @@
 #include <string>
 using namespace std;
 
-class Student {
+// Abstract Class Person
+class Person {
+public:
+    // Pure virtual function
+    virtual void displayDetails() const = 0;
+};
+
+class Student : public Person {
 private:
     string name;  
     int age;      
@@ -62,6 +69,11 @@ public:
         cout << "Total Students: " << totalStudent << endl;
     }
 
+    // Overriding virtual function
+    void displayDetails() const override {
+        cout << "Student Name: " << name << ", Roll No: " << rollNo << endl;
+    }
+
     ~Student() {
         cout << "Good Bye " << name << endl;
         totalStudent--;
@@ -70,7 +82,7 @@ public:
 
 int Student::totalStudent = 0;
 
-class Course {
+class Course : public Person {
 private:
     string courseName; 
     string courseCode; 
@@ -121,6 +133,11 @@ public:
         cout << "Total Courses: " << totalCourse << endl;
     }
 
+    // Overriding virtual function
+    void displayDetails() const override {
+        cout << "Course Name: " << courseName << ", Course Code: " << courseCode << endl;
+    }
+
     ~Course() {
         cout << "Completed Course is " << courseName << endl;
         totalCourse--;
@@ -128,44 +145,6 @@ public:
 };
 
 int Course::totalCourse = 0;
-
-class GraduateStudent : public Student {
-    string researchTopic;
-
-public:
-    GraduateStudent(string name, int age, int rollNo, string address, string topic) 
-        : Student(name, age, rollNo, address), researchTopic(topic) {}
-
-    void getGraduateStudentDetails() {
-        getStudentDetails();
-        cout << "Research Topic: " << researchTopic << endl;
-    }
-};
-
-class TheoryCourse : public Course {
-public:
-    TheoryCourse(string n, string code, int c, string instr) : Course(n, code, c, instr) {}
-
-    void getTheoryCourseDetails() {
-        cout << "Theory ";
-        getCourseDetails();
-    }
-};
-
-class PracticalCourse : public Course {
-private:
-    string labAssistant;
-
-public:
-    PracticalCourse(string n, string code, int c, string instr, string assistant) 
-        : Course(n, code, c, instr), labAssistant(assistant) {}
-
-    void getPracticalCourseDetails() {
-        cout << "Practical ";
-        getCourseDetails();
-        cout << "Lab Assistant: " << labAssistant << endl;
-    }
-};
 
 int main() {
     // Demonstrating function overloading with setStudent
@@ -176,17 +155,16 @@ int main() {
     student1.setStudent("Sahu", 18, 1, "123 White Field"); // Full details
     student1.getStudentDetails();
 
-    GraduateStudent gradStudent("Sahu", 18, 1, "123 White Field", "AI and ML");
-    gradStudent.getGraduateStudentDetails();
+    // Using pointers to demonstrate polymorphism with abstract class
+    Person* person1 = new Student("John", 20, 101, "Main Street");
+    Person* person2 = new Course("Data Structures", "DS101", 3, "Dr. Smith");
 
-    TheoryCourse theory("Problem Solving", "PSUP1", 4, "Nayan");
-    PracticalCourse practical("Data Structures Lab", "DS101", 3, "Sumit", "Arjun");
+    person1->displayDetails(); // Calls Student's displayDetails
+    person2->displayDetails(); // Calls Course's displayDetails
 
-    theory.getTheoryCourseDetails();
-    practical.getPracticalCourseDetails();
-    
-    Student::totalStudents();
-    Course::totalCourses();
+    // Clean up
+    delete person1;
+    delete person2;
 
     return 0;
 }
