@@ -151,6 +151,49 @@ void CourseDisplay::display(Course &course) {
          << ", Credits: " << course.getCredits() << ", Instructor: " << course.getInstructor() << endl;
 }
 
+// New Teacher Class
+class TeacherDisplay {
+public:
+    static void display(class Teacher &teacher);
+};
+
+class Teacher : public Person {
+private:
+    string name;
+    string department;
+    string designation;
+
+public:
+    Teacher() {
+        name = "Unknown";
+        department = "Not Provided";
+        designation = "Not Provided";
+    }
+
+    Teacher(string n, string dept, string desig) {
+        name = n;
+        department = dept;
+        designation = desig;
+    }
+
+    string getName() { return name; }
+    string getDepartment() { return department; }
+    string getDesignation() { return designation; }
+
+    void displayDetails() const override {
+        TeacherDisplay::display(*(Teacher*)this);
+    }
+
+    ~Teacher() {
+        cout << "Goodbye " << name << endl;
+    }
+};
+
+void TeacherDisplay::display(Teacher &teacher) {
+    cout << "Teacher Name: " << teacher.getName() << ", Department: " << teacher.getDepartment()
+         << ", Designation: " << teacher.getDesignation() << endl;
+}
+
 int main() {
     // Demonstrating function overloading with setStudent
     Student student1;
@@ -161,16 +204,23 @@ int main() {
     Course course1("Data Structures", "DS101", 3, "Dr. Smith");
     course1.displayDetails();
 
+    // Using parameterized constructor to create Teacher objects
+    Teacher teacher1("Dr. Green", "Computer Science", "Professor");
+    teacher1.displayDetails();
+
     // Using pointers to demonstrate polymorphism with abstract class
     Person* person1 = new Student("John", 20, 101, "Main Street");
     Person* person2 = new Course("Algorithms", "ALG202", 4, "Dr. Brown");
+    Person* person3 = new Teacher("Dr. White", "Mathematics", "Lecturer");
 
     person1->displayDetails();  
     person2->displayDetails();  
+    person3->displayDetails();  
 
     // Clean up
     delete person1;
     delete person2;
+    delete person3;
 
     return 0;
 }
