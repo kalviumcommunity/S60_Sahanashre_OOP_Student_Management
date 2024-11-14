@@ -5,14 +5,24 @@ using namespace std;
 // Abstract Class Person
 class Person {
 public:
-    // Pure virtual function
-    virtual void displayDetails() const = 0;
+    virtual void displayDetails() const = 0;  // Pure virtual function
+    virtual ~Person() {}  // Virtual destructor for proper cleanup
 };
 
-// Separate display class for Student
+// Separate display logic for Student, Course, and Teacher
 class StudentDisplay {
 public:
-    static void display(class Student &student);
+    static void display(const class Student &student);
+};
+
+class CourseDisplay {
+public:
+    static void display(const class Course &course);
+};
+
+class TeacherDisplay {
+public:
+    static void display(const class Teacher &teacher);
 };
 
 class Student : public Person {
@@ -25,47 +35,24 @@ private:
 public:
     static int totalStudent;
 
-    // Default Constructor
-    Student() {
-        name = "Unknown";
-        age = 0;
-        rollNo = 0;
-        address = "Not Provided";
+    // Constructors
+    Student() : name("Unknown"), age(0), rollNo(0), address("Not Provided") {
         totalStudent++;
     }
 
-    // Parameterized Constructor
-    Student(string n, int a, int r, string addr) {
-        name = n;
-        age = a;
-        rollNo = r;
-        address = addr;
+    Student(string n, int a, int r, string addr) : name(n), age(a), rollNo(r), address(addr) {
         totalStudent++;
     }
 
-    void setStudent(string n, int a, int r, string addr) {
-        name = n;
-        age = a;
-        rollNo = r;
-        address = addr;
-    }
+    // Getters
+    string getName() const { return name; }
+    int getAge() const { return age; }
+    int getRollNo() const { return rollNo; }
+    string getAddress() const { return address; }
 
-    string getName() { return name; }
-    int getAge() { return age; }
-    int getRollNo() { return rollNo; }
-    string getAddress() { return address; }
-
-    void updateAge(int newAge) {
-        age = newAge;
-        cout << "Updated Age: " << age << endl;
-    }
-
-    static void totalStudents() {
-        cout << "Total Students: " << totalStudent << endl;
-    }
-
+    // Override displayDetails to respect LSP without downcasting
     void displayDetails() const override {
-        StudentDisplay::display(*(Student*)this);
+        StudentDisplay::display(*this);
     }
 
     ~Student() {
@@ -76,16 +63,10 @@ public:
 
 int Student::totalStudent = 0;
 
-void StudentDisplay::display(Student &student) {
+void StudentDisplay::display(const Student &student) {
     cout << "Student Name: " << student.getName() << ", Age: " << student.getAge()
          << ", Roll No: " << student.getRollNo() << ", Address: " << student.getAddress() << endl;
 }
-
-// Separate display class for Course
-class CourseDisplay {
-public:
-    static void display(class Course &course);
-};
 
 class Course : public Person {
 private:
@@ -97,45 +78,24 @@ private:
 public:
     static int totalCourse;
 
-    Course() {
-        courseName = "Unknown";
-        courseCode = "";
-        credits = 0;
-        instructor = "";
+    // Constructors
+    Course() : courseName("Unknown"), courseCode(""), credits(0), instructor("") {
         totalCourse++;
     }
 
-    Course(string n, string code, int c, string instr) {
-        courseName = n;
-        courseCode = code;
-        credits = c;
-        instructor = instr;
+    Course(string n, string code, int c, string instr) : courseName(n), courseCode(code), credits(c), instructor(instr) {
         totalCourse++;
     }
 
-    void setCourse(string n, string code, int c, string instr) {
-        courseName = n;
-        courseCode = code;
-        credits = c;
-        instructor = instr;
-    }
+    // Getters
+    string getCourseName() const { return courseName; }
+    string getCourseCode() const { return courseCode; }
+    int getCredits() const { return credits; }
+    string getInstructor() const { return instructor; }
 
-    string getCourseName() { return courseName; }
-    string getCourseCode() { return courseCode; }
-    int getCredits() { return credits; }
-    string getInstructor() { return instructor; }
-
-    void updateCredits(int newCredits) {
-        credits = newCredits;
-        cout << "Updated Credits: " << credits << endl;
-    }
-
-    static void totalCourses() {
-        cout << "Total Courses: " << totalCourse << endl;
-    }
-
+    // Override displayDetails to respect LSP without downcasting
     void displayDetails() const override {
-        CourseDisplay::display(*(Course*)this);
+        CourseDisplay::display(*this);
     }
 
     ~Course() {
@@ -146,16 +106,10 @@ public:
 
 int Course::totalCourse = 0;
 
-void CourseDisplay::display(Course &course) {
+void CourseDisplay::display(const Course &course) {
     cout << "Course Name: " << course.getCourseName() << ", Course Code: " << course.getCourseCode()
          << ", Credits: " << course.getCredits() << ", Instructor: " << course.getInstructor() << endl;
 }
-
-// New Teacher Class
-class TeacherDisplay {
-public:
-    static void display(class Teacher &teacher);
-};
 
 class Teacher : public Person {
 private:
@@ -164,24 +118,18 @@ private:
     string designation;
 
 public:
-    Teacher() {
-        name = "Unknown";
-        department = "Not Provided";
-        designation = "Not Provided";
-    }
+    Teacher() : name("Unknown"), department("Not Provided"), designation("Not Provided") {}
 
-    Teacher(string n, string dept, string desig) {
-        name = n;
-        department = dept;
-        designation = desig;
-    }
+    Teacher(string n, string dept, string desig) : name(n), department(dept), designation(desig) {}
 
-    string getName() { return name; }
-    string getDepartment() { return department; }
-    string getDesignation() { return designation; }
+    // Getters
+    string getName() const { return name; }
+    string getDepartment() const { return department; }
+    string getDesignation() const { return designation; }
 
+    // Override displayDetails to respect LSP without downcasting
     void displayDetails() const override {
-        TeacherDisplay::display(*(Teacher*)this);
+        TeacherDisplay::display(*this);
     }
 
     ~Teacher() {
@@ -189,30 +137,18 @@ public:
     }
 };
 
-void TeacherDisplay::display(Teacher &teacher) {
+void TeacherDisplay::display(const Teacher &teacher) {
     cout << "Teacher Name: " << teacher.getName() << ", Department: " << teacher.getDepartment()
          << ", Designation: " << teacher.getDesignation() << endl;
 }
 
 int main() {
-    // Demonstrating function overloading with setStudent
-    Student student1;
-    student1.setStudent("Sahu", 18, 1, "123 White Field");
-    student1.displayDetails();
+    // Using base class pointers to demonstrate LSP
+    Person* person1 = new Student("Sahu", 18, 1, "123 White Field");
+    Person* person2 = new Course("Data Structures", "DS101", 3, "Nayan Kumar");
+    Person* person3 = new Teacher("Siva Subramaniyan", "Computer Science", "Professor");
 
-    // Using parameterized constructor to create Course objects
-    Course course1("Data Structures", "DS101", 3, "Dr. Smith");
-    course1.displayDetails();
-
-    // Using parameterized constructor to create Teacher objects
-    Teacher teacher1("Dr. Green", "Computer Science", "Professor");
-    teacher1.displayDetails();
-
-    // Using pointers to demonstrate polymorphism with abstract class
-    Person* person1 = new Student("John", 20, 101, "Main Street");
-    Person* person2 = new Course("Algorithms", "ALG202", 4, "Dr. Brown");
-    Person* person3 = new Teacher("Dr. White", "Mathematics", "Lecturer");
-
+    // Display details for each object without downcasting
     person1->displayDetails();  
     person2->displayDetails();  
     person3->displayDetails();  
