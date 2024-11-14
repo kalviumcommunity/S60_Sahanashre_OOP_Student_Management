@@ -9,25 +9,31 @@ public:
     virtual void displayDetails() const = 0;
 };
 
+// Separate display class for Student
+class StudentDisplay {
+public:
+    static void display(class Student &student);
+};
+
 class Student : public Person {
 private:
-    string name;  
-    int age;      
+    string name;
+    int age;
     int rollNo;
-    string address; 
-    
+    string address;
+
 public:
-    static int totalStudent; 
+    static int totalStudent;
 
     // Default Constructor
-    Student() { 
+    Student() {
         name = "Unknown";
         age = 0;
         rollNo = 0;
         address = "Not Provided";
-        totalStudent++; 
+        totalStudent++;
     }
-    
+
     // Parameterized Constructor
     Student(string n, int a, int r, string addr) {
         name = n;
@@ -37,7 +43,6 @@ public:
         totalStudent++;
     }
 
-    // Overloaded setter function for full details
     void setStudent(string n, int a, int r, string addr) {
         name = n;
         age = a;
@@ -45,20 +50,10 @@ public:
         address = addr;
     }
 
-    // Overloaded setter function for name and roll number only
-    void setStudent(string n, int r) {
-        name = n;
-        rollNo = r;
-    }
-
     string getName() { return name; }
     int getAge() { return age; }
     int getRollNo() { return rollNo; }
     string getAddress() { return address; }
-
-    void getStudentDetails() {
-        cout << "Name: " << getName() << ", Age: " << getAge() << ", Roll No: " << getRollNo() << ", Address: " << getAddress() << endl;
-    }
 
     void updateAge(int newAge) {
         age = newAge;
@@ -69,37 +64,47 @@ public:
         cout << "Total Students: " << totalStudent << endl;
     }
 
-    // Overriding virtual function
     void displayDetails() const override {
-        cout << "Student Name: " << name << ", Roll No: " << rollNo << endl;
+        StudentDisplay::display(*(Student*)this);
     }
 
     ~Student() {
-        cout << "Good Bye " << name << endl;
+        cout << "Goodbye " << name << endl;
         totalStudent--;
     }
 };
 
 int Student::totalStudent = 0;
 
+void StudentDisplay::display(Student &student) {
+    cout << "Student Name: " << student.getName() << ", Age: " << student.getAge()
+         << ", Roll No: " << student.getRollNo() << ", Address: " << student.getAddress() << endl;
+}
+
+// Separate display class for Course
+class CourseDisplay {
+public:
+    static void display(class Course &course);
+};
+
 class Course : public Person {
 private:
-    string courseName; 
-    string courseCode; 
-    int credits;       
-    string instructor; 
+    string courseName;
+    string courseCode;
+    int credits;
+    string instructor;
 
 public:
     static int totalCourse;
 
-    Course() { 
+    Course() {
         courseName = "Unknown";
         courseCode = "";
         credits = 0;
         instructor = "";
         totalCourse++;
     }
-        
+
     Course(string n, string code, int c, string instr) {
         courseName = n;
         courseCode = code;
@@ -112,17 +117,13 @@ public:
         courseName = n;
         courseCode = code;
         credits = c;
-        instructor = instr; 
+        instructor = instr;
     }
 
     string getCourseName() { return courseName; }
     string getCourseCode() { return courseCode; }
     int getCredits() { return credits; }
     string getInstructor() { return instructor; }
-
-    void getCourseDetails() {
-        cout << "Course: " << getCourseName() << ", Code: " << getCourseCode() << ", Credits: " << getCredits() << ", Instructor: " << getInstructor() << endl;
-    }
 
     void updateCredits(int newCredits) {
         credits = newCredits;
@@ -133,34 +134,39 @@ public:
         cout << "Total Courses: " << totalCourse << endl;
     }
 
-    // Overriding virtual function
     void displayDetails() const override {
-        cout << "Course Name: " << courseName << ", Course Code: " << courseCode << endl;
+        CourseDisplay::display(*(Course*)this);
     }
 
     ~Course() {
-        cout << "Completed Course is " << courseName << endl;
+        cout << "Completed Course: " << courseName << endl;
         totalCourse--;
     }
 };
 
 int Course::totalCourse = 0;
 
+void CourseDisplay::display(Course &course) {
+    cout << "Course Name: " << course.getCourseName() << ", Course Code: " << course.getCourseCode()
+         << ", Credits: " << course.getCredits() << ", Instructor: " << course.getInstructor() << endl;
+}
+
 int main() {
     // Demonstrating function overloading with setStudent
     Student student1;
-    student1.setStudent("Sahu", 1);  // Only name and roll number
-    student1.getStudentDetails();
+    student1.setStudent("Sahu", 18, 1, "123 White Field");
+    student1.displayDetails();
 
-    student1.setStudent("Sahu", 18, 1, "123 White Field"); // Full details
-    student1.getStudentDetails();
+    // Using parameterized constructor to create Course objects
+    Course course1("Data Structures", "DS101", 3, "Dr. Smith");
+    course1.displayDetails();
 
     // Using pointers to demonstrate polymorphism with abstract class
     Person* person1 = new Student("John", 20, 101, "Main Street");
-    Person* person2 = new Course("Data Structures", "DS101", 3, "Dr. Smith");
+    Person* person2 = new Course("Algorithms", "ALG202", 4, "Dr. Brown");
 
-    person1->displayDetails(); // Calls Student's displayDetails
-    person2->displayDetails(); // Calls Course's displayDetails
+    person1->displayDetails();  
+    person2->displayDetails();  
 
     // Clean up
     delete person1;
